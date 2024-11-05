@@ -54,12 +54,21 @@ class MatSimulator{
 
 //testing
 
-const simulator = new MatSimulator();
-simulator.start(500);
+let refreshInterval = 500;
 
-setTimeout(() => simulator.turnOnTile(0, 0), 1000);
-setTimeout(() => simulator.turnOnTile(13, 27), 1000);
-setTimeout(() => simulator.turnOnTile(2, 5), 2000);
-setTimeout(() => simulator.turnOnTile(3, 9), 3000);
-setTimeout(() => simulator.turnOffTile(2, 5), 4000);
-setTimeout(() => simulator.stop(), 8000);
+const simulator = new MatSimulator();
+simulator.start(refreshInterval);
+
+let timeCount = refreshInterval;
+
+
+for(let i = 0; i < simulator.mat[0].length; i++){
+    for(let j = 0; j < simulator.mat.length; j++){
+        timeCount += refreshInterval;
+
+        setTimeout(() => simulator.turnOnTile(i, j), timeCount);
+        setTimeout(() => simulator.turnOffTile(i, j), timeCount + refreshInterval);
+    }
+}
+
+setTimeout(() => simulator.stop(), refreshInterval * simulator.mat.length * simulator.mat[0].length + refreshInterval * 4);
